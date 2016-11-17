@@ -5,11 +5,17 @@ $username = getenv('C9_USER');
 $password = '';
 $dbname = 'world';
 $query = $_GET['country'];
-
 $conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
 
-$stmt = $conn->query("SELECT * FROM countries WHERE name LIKE '%$query%'");
-
+if(isset($_GET['all']))
+{
+    $stmt = $conn->query("SELECT * FROM countries");
+  
+}
+else 
+{
+    $stmt = $conn->query("SELECT * FROM countries WHERE name LIKE '%$query%'");
+}
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 echo '<ul>';
